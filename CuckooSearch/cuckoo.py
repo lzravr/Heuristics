@@ -11,7 +11,7 @@ from cs_parameters import Params as params
 
 def levy_flight(la):
     # generisanje koraka levijevom raspodelom
-    sigma1 = np.power((math.gamma(1 + la) * np.sin(np.pi * la / 2)) / (math.gamma((1 + la) / 2) * np.power(2, (la - 1) / 2)), 1 / la )
+    sigma1 = np.power((math.gamma(1 + la) * np.sin(np.pi * la / 2)) / (la * math.gamma((1 + la) / 2) * np.power(2, (la - 1) / 2)), 1 / la )
     sigma2 = 1
 
     u = np.random.normal(0, sigma1, size=params.get_dimension())
@@ -26,7 +26,7 @@ def levy_flight(la):
 class Cuckoo:
     def __init__(self):
         self.position = np.random.rand(params.get_dimension()) * (params.get_domain_max() - params.get_domain_min()) + params.get_domain_min()
-        self.fitness = fn.calculate(self.position, 0)
+        self.fitness = fn.calculate(self.position)
     
     def get_position(self):
         return self.position

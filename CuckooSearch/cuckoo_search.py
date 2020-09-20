@@ -5,6 +5,7 @@ import os
 import sys
 import csv
 from cs_parameters import Params as params
+import time
 
 if os.path.exists("results"):
     pass
@@ -15,6 +16,7 @@ results = open("results" + os.sep + "results.csv", "w")
 results_writer = csv.writer(results, lineterminator="\n")
 
 def main():
+    np.random.seed(round(time.time()))
 
     cuckoos = []
 
@@ -33,7 +35,7 @@ def main():
         for i in range(len(cuckoos)):
 
             cuckoos[i].move_cuckoo()
-            cuckoos[i].set_fitness(fn.calculate(cuckoos[i].get_position(), iteration))
+            cuckoos[i].set_fitness(fn.calculate(cuckoos[i].get_position()))
 
             # nasumicno biramo resenje sa kojim uporedjujemo novo generisano
             j = np.random.randint(0, params.get_population_size())
@@ -52,7 +54,7 @@ def main():
             r = np.random.rand()
             if ( r < params.get_pa() ):
                 cuckoos[a].abandon()
-                cuckoos[a].set_fitness(fn.calculate(cuckoos[a].get_position(), iteration))
+                cuckoos[a].set_fitness(fn.calculate(cuckoos[a].get_position()))
         
         cuckoos = sorted(cuckoos, key=lambda cuckoo: cuckoo.get_fitness())
 
@@ -65,8 +67,9 @@ def main():
         print(best_position)
     
         results.write(str(iteration) + "," + str(best_fitness) + "\n")
-    input()
+
     results.close()
+    input()
             
 
 main()

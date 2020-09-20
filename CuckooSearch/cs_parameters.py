@@ -1,7 +1,7 @@
 class Params:
     population_size = 10
-    domain_max = 5.12
-    domain_min = -5.12
+    domain_max = 500
+    domain_min = -500
     _lambda = 1.5
     pa = 0.25
     step_size = 0.01
